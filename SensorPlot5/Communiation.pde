@@ -5,6 +5,7 @@ byte[] buffer;
 boolean halfHeader = false;
 int transmitIndex = 0;
 int tempVal;
+int valuesCount = 2;
 
 void communicationSetup(int port){
   println(Serial.list());
@@ -25,7 +26,7 @@ void readSerial(){
       if(inByte==255) halfHeader = true;                      // first element of a header (might not be one)
       else if(halfHeader) halfHeader = false;                 // if current is not 255, then previous was not a header 
       if(transmitIndex%2==0) tempVal = inByte;                // if transmitIndex is 2, keep tempoarily (this is low byte)
-      else onValue((transmitIndex-1)/2, (inByte<<8)+tempVal); // else, this is the last byte of the value. combine with tempVal and 'send'
+      else onValue(min((transmitIndex-1)/2,valuesCount-1), (inByte<<8)+tempVal); // else, this is the last byte of the value. combine with tempVal and 'send'
       transmitIndex++;
     }
   }

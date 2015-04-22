@@ -1,13 +1,22 @@
+int SENSCOUNT = 2;
+color[] colors = {#ff0000,#00ff00,#0000ff,#ffff00,#00ffff,#ff00ff};
 Graph graph;
 File saveFile = null;
+Plot[] rawSignalPlots;
+Plot[] analysedPlots;
 
 void setup() {
   size(1280, 750);
   communicationSetup(2);
-
+  initAnalysis();
   graph = new Graph(this, 50, 50, 950, 650);
-  graph.addPlot("A0", #ff0000);
-  graph.addPlot("A1", #00f0ff);
+  
+  rawSignalPlots = new Plot[SENSCOUNT];
+  analysedPlots = new Plot[SENSCOUNT];
+  for (int i = 0; i < SENSCOUNT; ++i) {
+    rawSignalPlots [i] = graph.addPlot("Raw A"+i, colors[i]); 
+    analysedPlots[i] = graph.addPlot("Analysed A"+i, colors[i]);
+  }
 }
 
 void draw() {
@@ -16,7 +25,9 @@ void draw() {
 }
 
 // called by graph 'communiation.pde' when a value is recieved.
-void onValue(int ValueIndex, int value) { graph.addPointTo(ValueIndex, value); }
+void onValue(int ValueIndex, int value) {
+  analyse(ValueIndex, value);
+}
 
 // select saveFile
 void askSaveFile() {

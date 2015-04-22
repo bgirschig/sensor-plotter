@@ -22,10 +22,12 @@ class Graph{
   Slider scaleXBtn;
   RadioButton refPlot;
   PApplet parent;
+  ArrayList<Toggle> toggles;
 
   Graph(PApplet parent, int _x, int _y, int _w, int _h){
     x = _x; y = _y; w = _w; h = _h;
     
+    toggles = new ArrayList<Toggle>();
     plots = new ArrayList<Plot>();
     initControls(parent);
     PTime = millis();
@@ -33,8 +35,12 @@ class Graph{
   }
   Plot addPlot(String name, color col){
     Plot p = new Plot(this, col, name);
+    int index = plots.size();
     plots.add(p);
-    refPlot.addItem(name, plots.size()-1);
+    refPlot.addItem("_"+name, index);
+    toggles.add(cp5.addToggle(name).setColorActive(col).setPosition(x+w+10,y+120+15*index).setSize(10,10).setColorLabel(0).plugTo(this).setValue(true));
+    toggles.get(index).captionLabel().style().marginTop = -13;
+    toggles.get(index).captionLabel().style().marginLeft = 15;
     update();
     return p;
   }
@@ -71,23 +77,13 @@ class Graph{
     
     noStroke();fill(255);rect(x-2,y-2,w+4,h+4); stroke(0); // background
     line(x, y+originY, x+w, y+originY);                    // horizontal axis
-  
-                                                           // Draw curves & legends
+                                                           // Draw curves
     pushMatrix();                                          // -----------
     translate(x+originX,y+originY);                        //      |
     for (int i=0; i<plots.size(); i++){                    //      |
-      plots.get(i).draw();                                 //      |
+      if(toggles.get(i).getState()) plots.get(i).draw();   //      |
     }                                                      //      v
     popMatrix();                                           // -----------
-  
-    // legend
-    noStroke();
-    for (int i=0; i<plots.size(); i++){
-      fill(plots.get(i).col);
-      rect(x+w+10, y+i*20+200, 10,10);
-      fill(0);
-      text(plots.get(i).name, x+w+25, y+i*20+210);
-    }
     
     // cursor   
     if(refPlot.getValue()>=0){
@@ -139,8 +135,8 @@ class Graph{
   void initControls(PApplet parent){
     cp5 = new ControlP5(parent);
     pauseBtn = cp5.addToggle("pause").setPosition(x+w+10,y).setColorLabel(0).plugTo(this);
-    resetBtn = cp5.addButton("reset").setValue(0).setPosition(x+w+100,y).setSize(40,19).plugTo(this);
-    saveBtn = cp5.addButton("save").setValue(0).setPosition(x+w+155,y).setSize(40,19).plugTo(this);
+    resetBtn = cp5.addButton("reset").setValue(0).setPosition(x+w+60,y).setSize(40,19).plugTo(this);
+    saveBtn = cp5.addButton("save").setValue(0).setPosition(x+w+110,y).setSize(40,19).plugTo(this);
     cp5.addTextlabel("label").setText("Cursor:").setPosition(x+w+7,y+40).setColorValue(0);
     refPlot = cp5.addRadioButton("refPlot").setPosition(x+w+50,y+40).setColorLabel(0).addItem("off", plots.size()-1).activate(0).setNoneSelectedAllowed(false);
     scaleXBtn = cp5.addSlider("scale X").setPosition(x+w+10,y+90).setRange(0.1,15).setSize(160,20).setColorLabel(0).setValue(2).plugTo(this);
