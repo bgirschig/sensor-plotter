@@ -6,21 +6,17 @@ void setup() {
   communicationSetup(2);
 
   graph = new Graph(this, 50, 50, 950, 650);
-  graph.addPlot("A0", #ff0000); // will be first value sent by arduino
-  graph.addPlot("A1", #00f0ff); // will be second value sent by arduino
-
-  // graph.hide(0);
-  // graph.hide(1);
+  graph.addPlot("A0", #ff0000);
+  graph.addPlot("A1", #00f0ff);
 }
 
 void draw() {
   graph.draw();
   readSerial();
 }
-void onValue(int ValueIndex, int value) {
-  graph.addPointTo(ValueIndex, value);
-  // if(drawDelta && ValueIndex==1) graph.addPointTo(delta, graph.getLastPt(0)-graph.getLastPt(1));
-}
+
+// called by graph 'communiation.pde' when a value is recieved.
+void onValue(int ValueIndex, int value) { graph.addPointTo(ValueIndex, value); }
 
 // select saveFile
 void askSaveFile() {

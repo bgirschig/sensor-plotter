@@ -5,17 +5,14 @@
 #define AVGSIZE 3
 
 int toBeSent[VALUESCOUNT];
-// RunningAverage averagedVals(AVGSIZE);
 
 void setup() {
 	Serial.begin(9600);
-	// myRA.clear();
 	delay(500);
 }
 
 void loop() {
   for(int i=0;i<VALUESCOUNT;i++){
-  	// myRA.addValue(analogRead(i));
   	toBeSent[i] = analogRead(i);
   }
 
