@@ -38,9 +38,8 @@ class Graph{
     int index = plots.size();
     plots.add(p);
     refPlot.addItem("_"+name, index);
-    toggles.add(cp5.addToggle(name).setColorActive(col).setPosition(x+w+10,y+120+15*index).setSize(10,10).setColorLabel(0).plugTo(this).setValue(true));
-    toggles.get(index).captionLabel().style().marginTop = -13;
-    toggles.get(index).captionLabel().style().marginLeft = 15;
+    toggles.add(cp5.addToggle(name).setColorActive(col).setPosition(x+w+10,y+75+10*index).setSize(9,9).setColorLabel(0).plugTo(this).setValue(true));
+    toggles.get(index).setLabel("");
     update();
     return p;
   }
@@ -137,9 +136,10 @@ class Graph{
     pauseBtn = cp5.addToggle("pause").setPosition(x+w+10,y).setColorLabel(0).plugTo(this);
     resetBtn = cp5.addButton("reset").setValue(0).setPosition(x+w+60,y).setSize(40,19).plugTo(this);
     saveBtn = cp5.addButton("save").setValue(0).setPosition(x+w+110,y).setSize(40,19).plugTo(this);
-    cp5.addTextlabel("label").setText("Cursor:").setPosition(x+w+7,y+40).setColorValue(0);
-    refPlot = cp5.addRadioButton("refPlot").setPosition(x+w+50,y+40).setColorLabel(0).addItem("off", plots.size()-1).activate(0).setNoneSelectedAllowed(false);
-    scaleXBtn = cp5.addSlider("scale X").setPosition(x+w+10,y+90).setRange(0.1,15).setSize(160,20).setColorLabel(0).setValue(2).plugTo(this);
+    scaleXBtn = cp5.addSlider("scale X").setPosition(x+w+10,y+35).setRange(0.1,15).setSize(160,20).setColorLabel(0).setValue(2).plugTo(this);
+    
+    // cp5.addTextlabel("label").setText("Cursor:").setPosition(x+w+7,y+40).setColorValue(0);
+    refPlot = cp5.addRadioButton("refPlot").setPosition(x+w+23,y+65).setColorLabel(0).addItem("off", plots.size()-1).activate(0).setNoneSelectedAllowed(false);
   }
   void controlEvent(ControlEvent theEvent) {
     if(theEvent.isFrom("reset")) reset();
