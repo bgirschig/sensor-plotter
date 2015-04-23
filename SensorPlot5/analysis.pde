@@ -4,7 +4,6 @@ float[] averages;
 void initAnalysis(){
 	prevValues = new int[2][30];
 	averages = new float[2];
-	println(movingAvg(prevValues[0], 0));
 }
 void analyse(int valueIndex, int value){
 	averages[valueIndex] = movingAvg(prevValues[valueIndex], value);
