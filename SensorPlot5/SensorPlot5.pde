@@ -3,7 +3,7 @@ color[] colors = {#ff0000,#00ff00,#0000ff,#ffff00,#00ffff,#ff00ff};
 Graph graph;
 File saveFile = null;
 Plot[] rawSignalPlots;
-Plot[] analysedPlots;
+// Plot[] analysedPlots;
 
 void setup() {
   size(1280, 750);
@@ -12,10 +12,10 @@ void setup() {
   graph = new Graph(this, 50, 50, 950, 650);
   
   rawSignalPlots = new Plot[SENSCOUNT];
-  analysedPlots = new Plot[SENSCOUNT];
+  // analysedPlots = new Plot[SENSCOUNT];
   for (int i = 0; i < SENSCOUNT; ++i) {
     rawSignalPlots [i] = graph.addPlot("Raw A"+i, colors[i]); 
-    analysedPlots[i] = graph.addPlot("Analysed A"+i, colors[i]);
+    // analysedPlots[i] = graph.addPlot("Analysed A"+i, colors[i]);
   }
 }
 

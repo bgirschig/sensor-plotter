@@ -8,7 +8,7 @@ void initAnalysis(){
 void analyse(int valueIndex, int value){
 	averages[valueIndex] = movingAvg(prevValues[valueIndex], value);
 	
-	graph.addPointTo(analysedPlots[valueIndex], abs(averages[valueIndex]-value));
+	// graph.addPointTo(analysedPlots[valueIndex], abs(averages[valueIndex]-value));
 	graph.addPointTo(rawSignalPlots[valueIndex], value);
 }
 
